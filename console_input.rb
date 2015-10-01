@@ -35,5 +35,7 @@ Lecture: Scraping Movies
 s = Scrape.new
 s.scrape_new_movie
 => true
- Movie.last
+m = Movie.last
  => Responds with last movie
+m.user_id = User.last.id
+m.save # Check localhost, see error and add encoding validator in scrape model
