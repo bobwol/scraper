@@ -14,10 +14,29 @@ class Scrape
 			self.genre = doc.at("//span[@itemprop = 'genre']").text 
 			self.release_date = doc.at("//td[@itemprop = 'datePublished']").text.to_date 	
 			self.runtime = doc.at("//time[@itemprop = 'duration']").text 
-			self.synopsis = doc.css('#movieSynopsis').text 
+			s = doc.css('#movieSynopsis').text
+			if ! s.valid_encoding?
+				s = s.encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8')
+			end
+			self.synopsis = s
 			return true
 		rescue Exception => e
 			self.failure = "Something went wrong with the scrape"
 		end
+	end
+
+	def save_movie
+		movie = Movie.new(
+			title: self.title,
+			hotness: self.hotness,
+			image_url: self.image_url,
+			synopsis: self.synopsis,
+			rating: self.rating,
+			genre: self.genre,
+			director: self.director,
+			release_date: self.release_date,
+			runtime: self.runtime
+			)
+		movie.save
 	end
 end
