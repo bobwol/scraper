@@ -25,7 +25,6 @@ class MoviesController < ApplicationController
         rating: @movie_data.rating,
         genre: @movie_data.genre,
         director: @movie_data.director,
-        release_date: @movie_data.release_date,
         runtime: @movie_data.runtime
         )
     else
@@ -88,7 +87,7 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:title, :hotness, :image_url, :synopsis, :rating, :genre, :director, :release_date, :runtime, :user_id)
+      params.require(:movie).permit(:title, :hotness, :image_url, :synopsis, :rating, :genre, :director, :runtime, :user_id)
     end
 
     def scrape
